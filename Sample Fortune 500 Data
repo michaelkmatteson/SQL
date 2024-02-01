@@ -1,0 +1,51 @@
+SELECT *
+FROM fortune_companies;
+
+#Checked to see which companies offer healthcare
+SELECT company_name
+AS Companies_With_Healthcare
+FROM fortune_companies
+WHERE healthcare_benefits=1;
+
+#Number of companies with healthcare
+SELECT COUNT(*)
+AS Companies_With_Healthcare
+FROM fortune_companies
+WHERE healthcare_benefits=1;
+
+#Checked to see distinct industry types represented
+SELECT DISTINCT(industry)
+AS Industry_Types
+FROM fortune_companies;
+
+#Average PTO for all companies listed
+SELECT ROUND(AVG(paid_time_off_days)) 
+AS Average_PTO
+From fortune_companies;
+
+#organized by how good PTO is
+SELECT company_name,
+CASE 
+	WHEN paid_time_off_days >18 THEN "Above Average PTO"
+	WHEN paid_time_off_days <18 THEN "Below Average PTO"
+	ELSE "Average"
+END AS PTO
+From fortune_companies;
+
+#Checked companies that have healthcare and have above average pto
+SELECT company_name
+FROM fortune_companies
+WHERE healthcare_benefits=1
+AND paid_time_off_days>=18;
+
+#Ordered companies by average tenure length
+SELECT company_name, avg_employee_tenure
+FROM fortune_companies
+ORDER BY avg_employee_tenure asc;
+
+#Checked industries avg revenue starting at 200b
+SELECT industry, ROUND(AVG(revenue),1) as avg_revenue_billions
+FROM fortune_companies
+GROUP BY industry
+HAVING avg_revenue_billions>=200;
+
